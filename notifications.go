@@ -1,6 +1,7 @@
 package onesignal
 
 import (
+	"encoding/json"
 	"net/url"
 )
 
@@ -24,8 +25,41 @@ func (c *NotificationServices) Browse(limit, offset string) (Success, error) {
 	if err != nil {
 		return Success{}, err
 	}
+	defer resp.Body.Close()
 
-	return resp, nil
+	var data Success
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
+		return Success{}, err
+	}
+
+	return data, nil
+}
+
+// Get function
+//
+// View the details of a single notification. This function returns a JSON object not a struct like others
+//
+// For your reference, you can read this API reference on https://documentation.onesignal.com/reference/view-notification
+func (c *NotificationServices) Get(id string) (interface{}, error) {
+	u, err := url.Parse(c.client.BaseURL.String() + "notifications/" + id + "?app_id=" + c.client.AppID)
+	if err != nil {
+		return Success{}, err
+	}
+
+	resp, err := GET(u.String(), c.client)
+	if err != nil {
+		return Success{}, err
+	}
+	defer resp.Body.Close()
+
+	var data interface{}
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
+		return Success{}, err
+	}
+
+	return data, nil
 }
 
 // Create function

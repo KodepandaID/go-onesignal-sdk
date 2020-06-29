@@ -45,6 +45,17 @@ func TestCreateNotification(t *testing.T) {
 	}
 }
 
+func TestGetNotification(t *testing.T) {
+	client := NewClient()
+	client.APIKey = os.Getenv("API_KEY")
+	client.AppID = os.Getenv("APP_ID")
+
+	_, err := client.Notification.Get(notificationID)
+	if err != nil {
+		t.Errorf("Error: %v", err.Error())
+	}
+}
+
 func TestCancelNotification(t *testing.T) {
 	client := NewClient()
 	client.APIKey = os.Getenv("API_KEY")

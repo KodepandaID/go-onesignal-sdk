@@ -5,6 +5,7 @@ type Success struct {
 	ID         string      `json:"id,omitempty"`
 	Recipients int         `json:"recipients,omitempty"`
 	ExternalID string      `json:"external_id,omitempty"`
+	Success    bool        `json:"success,omitempty"`
 	Errors     interface{} `json:"errors,omitempty"`
 }
 

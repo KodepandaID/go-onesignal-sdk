@@ -7,6 +7,8 @@ import (
 	_ "github.com/joho/godotenv/autoload"
 )
 
+var notificationID string
+
 func TestCreateNotification(t *testing.T) {
 	client := NewClient()
 	client.APIKey = os.Getenv("API_KEY")
@@ -14,8 +16,8 @@ func TestCreateNotification(t *testing.T) {
 
 	opt := &NotificationOpt{
 		NotificationContent: NotificationContent{
-			Headings: map[string]string{"en": "Judul Percobaan Nih"},
-			Contents: map[string]string{"en": "Percobaan Pesan"},
+			Headings: map[string]string{"en": "Judul Percobaan Nih Ahay"},
+			Contents: map[string]string{"en": "Percobaan Pesan Nih"},
 		},
 		Appearance: Appearance{
 			ChromeWebIcon: "https://kodepanda.com/assets/images/kodepanda-white.png",
@@ -24,7 +26,20 @@ func TestCreateNotification(t *testing.T) {
 			IncludedSegments: []string{"Active Users"},
 		},
 	}
-	_, err := client.Notification.Create(opt)
+	resp, err := client.Notification.Create(opt)
+	if err != nil {
+		t.Errorf("Error: %v", err.Error())
+	} else {
+		notificationID = resp.ID
+	}
+}
+
+func TestCancelNotification(t *testing.T) {
+	client := NewClient()
+	client.APIKey = os.Getenv("API_KEY")
+	client.AppID = os.Getenv("APP_ID")
+
+	_, err := client.Notification.Cancel(notificationID)
 	if err != nil {
 		t.Errorf("Error: %v", err.Error())
 	}

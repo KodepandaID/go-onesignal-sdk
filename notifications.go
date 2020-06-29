@@ -35,3 +35,24 @@ func (c *NotificationServices) Create(opt *NotificationOpt) (Success, error) {
 
 	return resp, nil
 }
+
+// Cancel function
+//
+// Cancel a notification
+//
+// Stop a scheduled or currently outgoing notification
+//
+// For your reference, you can read this API reference on https://documentation.onesignal.com/reference/cancel-notification
+func (c *NotificationServices) Cancel(id string) (Success, error) {
+	u, err := url.Parse(c.client.BaseURL.String() + "notifications/" + id + "?app_id=" + c.client.AppID)
+	if err != nil {
+		return Success{}, err
+	}
+
+	resp, err := DELETE(u.String(), c.client)
+	if err != nil {
+		return Success{}, err
+	}
+
+	return resp, nil
+}

@@ -35,6 +35,32 @@ func POST(url string, payload io.Reader, c *Client) (Success, error) {
 	return data, nil
 }
 
+// DELETE function
+// to handle http DELETE method
+func DELETE(url string, c *Client) (Success, error) {
+	var client = &http.Client{}
+
+	req, err := http.NewRequest("DELETE", url, nil)
+	req.Header.Set("Authorization", "Basic "+c.APIKey)
+	if err != nil {
+		return Success{}, err
+	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return Success{}, err
+	}
+	defer resp.Body.Close()
+
+	var data Success
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
+		return Success{}, err
+	}
+
+	return data, nil
+}
+
 // EncodeBody function
 //
 // Converting a struct to io.ReadWriter for http.request

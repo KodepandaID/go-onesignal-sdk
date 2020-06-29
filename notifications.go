@@ -9,6 +9,25 @@ type NotificationServices struct {
 	client *Client
 }
 
+// Browse function
+//
+// Browse notifications, you can see all the notification you have
+//
+// For your reference, you can read this API reference on https://documentation.onesignal.com/reference/view-notifications
+func (c *NotificationServices) Browse(limit, offset string) (Success, error) {
+	u, err := url.Parse(c.client.BaseURL.String() + "notifications?app_id=" + c.client.AppID + "&limit=" + limit + "&offset=" + offset)
+	if err != nil {
+		return Success{}, err
+	}
+
+	resp, err := GET(u.String(), c.client)
+	if err != nil {
+		return Success{}, err
+	}
+
+	return resp, nil
+}
+
 // Create function
 //
 // Create a notification

@@ -2,11 +2,15 @@ package onesignal
 
 // Success model for success responses from OneSignal API
 type Success struct {
-	ID         string      `json:"id,omitempty"`
-	Recipients int         `json:"recipients,omitempty"`
-	ExternalID string      `json:"external_id,omitempty"`
-	Success    bool        `json:"success,omitempty"`
-	Errors     interface{} `json:"errors,omitempty"`
+	ID            string        `json:"id,omitempty"`
+	Recipients    int           `json:"recipients,omitempty"`
+	ExternalID    string        `json:"external_id,omitempty"`
+	Success       bool          `json:"success,omitempty"`
+	Errors        interface{}   `json:"errors,omitempty"`
+	TotalCount    int           `json:"total_count,omitempty"`   // Show on BrowseNotification
+	Offset        int           `json:"offset,omitempty"`        // Show on BrowseNotification
+	Limit         int           `json:"limit,omitempty"`         // Show on BrowseNotification
+	Notifications []interface{} `json:"notifications,omitempty"` // Show on BrowseNotification
 }
 
 // Errors model for all the error request

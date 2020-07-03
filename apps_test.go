@@ -1,6 +1,7 @@
 package onesignal
 
 import (
+	"math/rand"
 	"os"
 	"testing"
 
@@ -31,6 +32,16 @@ func TestViewApp(t *testing.T) {
 	}
 }
 
+func randomString(n int) string {
+	var letter = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letter[rand.Intn(len(letter))]
+	}
+	return string(b)
+}
+
 func TestCreateApp(t *testing.T) {
 	client := NewClient()
 	client.APIKey = os.Getenv("API_KEY")
@@ -38,7 +49,7 @@ func TestCreateApp(t *testing.T) {
 	client.AppID = os.Getenv("APP_ID")
 
 	opt := &AppsOpt{
-		Name:     "Test library",
+		Name:     "new" + randomString(5),
 		SiteName: "Kodepanda Kreasi Media",
 	}
 	_, err := client.Apps.Create(opt)
@@ -54,7 +65,7 @@ func TestUpdateApp(t *testing.T) {
 	client.AppID = os.Getenv("APP_ID")
 
 	opt := &AppsOpt{
-		Name:     "Test library 1",
+		Name:     "update" + randomString(5),
 		SiteName: "Kodepanda Kreasi Media",
 	}
 	_, err := client.Apps.Update(os.Getenv("APP_ID"), opt)

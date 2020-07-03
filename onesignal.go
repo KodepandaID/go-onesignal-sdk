@@ -11,11 +11,14 @@ const (
 
 // A Client manages communication with the OneSignal API.
 type Client struct {
-	BaseURL *url.URL
-	APIKey  string
-	AppID   string
+	BaseURL    *url.URL
+	APIKey     string
+	AuthKey    string
+	AppID      string
+	UseAuthKey bool
 
 	Notification *NotificationServices
+	Apps         *AppsServices
 }
 
 // NewClient returns a new OneSignal API client
@@ -29,6 +32,7 @@ func NewClient() *Client {
 		BaseURL: baseURL,
 	}
 	c.Notification = &NotificationServices{client: c}
+	c.Apps = &AppsServices{client: c}
 
 	return c
 }

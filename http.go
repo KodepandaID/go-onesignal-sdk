@@ -13,7 +13,12 @@ func GET(url string, c *Client) (*http.Response, error) {
 	var client = &http.Client{}
 
 	req, err := http.NewRequest("GET", url, nil)
-	req.Header.Set("Authorization", "Basic "+c.APIKey)
+	if c.UseAuthKey {
+		req.Header.Set("Authorization", "Basic "+c.AuthKey)
+	} else {
+		req.Header.Set("Authorization", "Basic "+c.APIKey)
+	}
+
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +39,12 @@ func POST(url string, payload io.Reader, c *Client) (Success, error) {
 	req, err := http.NewRequest("POST", url, payload)
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Basic "+c.APIKey)
+	if c.UseAuthKey {
+		req.Header.Set("Authorization", "Basic "+c.AuthKey)
+	} else {
+		req.Header.Set("Authorization", "Basic "+c.APIKey)
+	}
+
 	if err != nil {
 		return Success{}, err
 	}
@@ -60,7 +70,12 @@ func DELETE(url string, c *Client) (Success, error) {
 	var client = &http.Client{}
 
 	req, err := http.NewRequest("DELETE", url, nil)
-	req.Header.Set("Authorization", "Basic "+c.APIKey)
+	if c.UseAuthKey {
+		req.Header.Set("Authorization", "Basic "+c.AuthKey)
+	} else {
+		req.Header.Set("Authorization", "Basic "+c.APIKey)
+	}
+
 	if err != nil {
 		return Success{}, err
 	}

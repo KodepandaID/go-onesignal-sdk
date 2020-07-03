@@ -90,3 +90,30 @@ func (c *AppsServices) Create(opt *AppsOpt) (interface{}, error) {
 
 	return resp, nil
 }
+
+// Update function
+//
+// Updates the name or configuration settings of an existing OneSignal application
+//
+// This method can be used to update the name or configuration settings of one of your existing apps. This function relates to https://onesignal.com/api/v1/apps/:id
+//
+// For your reference, you can read this API reference on https://documentation.onesignal.com/reference/update-an-app
+func (c *AppsServices) Update(id string, opt *AppsOpt) (interface{}, error) {
+	u, err := url.Parse(c.client.BaseURL.String() + "apps/" + id)
+	if err != nil {
+		return Success{}, err
+	}
+
+	b, err := EncodeBody(opt)
+	if err != nil {
+		return Success{}, err
+	}
+
+	c.client.UseAuthKey = true
+	resp, err := PUT(u.String(), b, c.client)
+	if err != nil {
+		return Success{}, err
+	}
+
+	return resp, nil
+}

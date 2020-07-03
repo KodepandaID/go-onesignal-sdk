@@ -145,3 +145,31 @@ func (c *AppsServices) BrowseDevice(limit, offset string) (DeviceResponse, error
 
 	return data, nil
 }
+
+// GetDevice function
+//
+// View the details of an existing device in one of your OneSignal apps
+//
+// This function relates to https://onesignal.com/api/v1/players/:id
+//
+// For your reference, you can read this API reference on https://documentation.onesignal.com/reference/view-device
+func (c *AppsServices) GetDevice(id string) (interface{}, error) {
+	u, err := url.Parse(c.client.BaseURL.String() + "players/" + id)
+	if err != nil {
+		return Success{}, err
+	}
+
+	resp, err := GET(u.String(), c.client)
+	if err != nil {
+		return Success{}, err
+	}
+	defer resp.Body.Close()
+
+	var data interface{}
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
+		return Success{}, err
+	}
+
+	return data, nil
+}

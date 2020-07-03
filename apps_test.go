@@ -74,3 +74,15 @@ func TestBrowseDevice(t *testing.T) {
 		t.Errorf("Error: %v", err.Error())
 	}
 }
+
+func TestGetDevice(t *testing.T) {
+	client := NewClient()
+	client.APIKey = os.Getenv("API_KEY")
+	client.AuthKey = os.Getenv("AUTH_KEY")
+	client.AppID = os.Getenv("APP_ID")
+
+	_, err := client.Apps.GetDevice(os.Getenv("DEVICE_ID"))
+	if err != nil {
+		t.Errorf("Error: %v", err.Error())
+	}
+}

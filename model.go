@@ -18,6 +18,14 @@ type Errors struct {
 	Errors []string `json:"errors,omitempty"`
 }
 
+// DeviceResponse model for response browse devices
+type DeviceResponse struct {
+	TotalCount int           `json:"total_count,omitempty"`
+	Offset     int           `json:"offset,omitempty"`
+	Limit      int           `json:"limit,omitempty"`
+	Players    []interface{} `json:"players,omitempty"`
+}
+
 // SpecificDevice model for request who wants to send to the specific device
 //
 // For more information, you can read this parameter reference from

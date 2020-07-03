@@ -117,3 +117,31 @@ func (c *AppsServices) Update(id string, opt *AppsOpt) (interface{}, error) {
 
 	return resp, nil
 }
+
+// BrowseDevice function
+//
+// View the details of multiple devices in one of your OneSignal apps
+//
+// This function relates to https://onesignal.com/api/v1/players?app_id=:app_id&limit=:limit&offset=:offset
+//
+// For your reference, you can read this API reference on https://documentation.onesignal.com/reference/view-devices
+func (c *AppsServices) BrowseDevice(limit, offset string) (DeviceResponse, error) {
+	u, err := url.Parse(c.client.BaseURL.String() + "players?app_id=" + c.client.AppID + "&limit=" + limit + "&offset=" + offset)
+	if err != nil {
+		return DeviceResponse{}, err
+	}
+
+	resp, err := GET(u.String(), c.client)
+	if err != nil {
+		return DeviceResponse{}, err
+	}
+	defer resp.Body.Close()
+
+	var data DeviceResponse
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
+		return DeviceResponse{}, err
+	}
+
+	return data, nil
+}

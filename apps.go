@@ -63,3 +63,30 @@ func (c *AppsServices) Get(id string) (interface{}, error) {
 
 	return data, nil
 }
+
+// Create function
+//
+// Create an OneSignal applications
+//
+// This method is used to create new apps in your OneSignal account. This function relates to https://onesignal.com/api/v1/apps
+//
+// For your reference, you can read this API reference on https://documentation.onesignal.com/reference/create-an-app
+func (c *AppsServices) Create(opt *AppsOpt) (interface{}, error) {
+	u, err := url.Parse(c.client.BaseURL.String() + "apps")
+	if err != nil {
+		return Success{}, err
+	}
+
+	b, err := EncodeBody(opt)
+	if err != nil {
+		return Success{}, err
+	}
+
+	c.client.UseAuthKey = true
+	resp, err := POST(u.String(), b, c.client)
+	if err != nil {
+		return Success{}, err
+	}
+
+	return resp, nil
+}

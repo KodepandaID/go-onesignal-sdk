@@ -30,3 +30,19 @@ func TestViewApp(t *testing.T) {
 		t.Errorf("Error: %v", err.Error())
 	}
 }
+
+func TestCreateApp(t *testing.T) {
+	client := NewClient()
+	client.APIKey = os.Getenv("API_KEY")
+	client.AuthKey = os.Getenv("AUTH_KEY")
+	client.AppID = os.Getenv("APP_ID")
+
+	opt := &AppsOpt{
+		Name:     "Test library",
+		SiteName: "Kodepanda Kreasi Media",
+	}
+	_, err := client.Apps.Create(opt)
+	if err != nil {
+		t.Errorf("Error: %v", err.Error())
+	}
+}

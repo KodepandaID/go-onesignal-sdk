@@ -182,3 +182,26 @@ type NotificationOpt struct {
 	Grouping
 	Platform
 }
+
+// AppsOpt model for request create an OneSignal application.
+//
+// For your reference, you can read this API reference on https://documentation.onesignal.com/reference/create-an-app
+type AppsOpt struct {
+	Name                             string `json:"name,omitempty"`
+	ApnsEnv                          string `json:"apns_env,omitempty"`
+	ApnsP12                          string `json:"apns_p12,omitempty"`
+	ApnsP12Password                  string `json:"apns_p12_password,omitempty"`
+	GcmKey                           string `json:"gcm_key,omitempty"`
+	AndroidGcmSenderID               string `json:"android_gcm_sender_id,omitempty"`
+	ChromeWebOrigin                  string `json:"chrome_web_origin,omitempty"`
+	ChromeWebDefaultNotificationIcon string `json:"chrome_web_notification_icon,omitempty"`
+	ChromeWebSubDomain               string `json:"chrome_web_sub_domain,omitempty"`
+	SafariApnsP12                    string `json:"safari_apns_p12,omitempty"`
+	SafariApnsP12Password            string `json:"safari_apns_p12_password,omitempty"`
+	SiteName                         string `json:"site_name,omitempty"`
+	SafariSiteOrigin                 string `json:"safari_site_origin,omitempty"`
+	SafariIcon256                    string `json:"safari_icon_256_256,omitempty"`
+	ChromeKey                        string `json:"chrome_key,omitempty"`
+	AdditionalDataIsRootPayload      bool   `json:"additional_data_is_root_payload,omitempty"`
+	OrganizationID                   string `json:"organization_id,omitempty"`
+}

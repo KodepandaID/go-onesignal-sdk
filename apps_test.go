@@ -1,7 +1,6 @@
 package onesignal
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -14,9 +13,20 @@ func TestBrowseApps(t *testing.T) {
 	client.AuthKey = os.Getenv("AUTH_KEY")
 	client.AppID = os.Getenv("APP_ID")
 
-	data, err := client.Apps.Browse()
+	_, err := client.Apps.Browse()
 	if err != nil {
 		t.Errorf("Error: %v", err.Error())
 	}
-	fmt.Print(data)
+}
+
+func TestViewApp(t *testing.T) {
+	client := NewClient()
+	client.APIKey = os.Getenv("API_KEY")
+	client.AuthKey = os.Getenv("AUTH_KEY")
+	client.AppID = os.Getenv("APP_ID")
+
+	_, err := client.Apps.Get(os.Getenv("APP_ID"))
+	if err != nil {
+		t.Errorf("Error: %v", err.Error())
+	}
 }

@@ -31,7 +31,11 @@ type DeviceResponse struct {
 // For more information, you can read this parameter reference from
 // OneSignal API Reference https://documentation.onesignal.com/reference/create-notification#send-to-specific-devices
 type SpecificDevice struct {
-	IncludedSegments       []string `json:"included_segments,omitempty"`
+	// IncludedSegments, you can filled with ["Active Users", "Inactive Users", "Subscribed Users", "Unsubscribed Users"].
+	// Included segment required to send what you want to your target. Users in these segments will receive a notification
+	IncludedSegments []string `json:"included_segments,omitempty"`
+	// IncludePlayerIDS, you can filled with users device ID
+	// With this settings, you can send your notification to specific device
 	IncludePlayerIDS       []string `json:"include_player_ids,omitempty"`
 	IncludeExternalUserIDS []string `json:"include_external_user_ids,omitempty"`
 	IncludeEmailTokens     []string `json:"include_email_tokens,omitempty"`
@@ -47,11 +51,16 @@ type SpecificDevice struct {
 // For more information, you can read this parameter reference from
 // OneSignal API Reference https://documentation.onesignal.com/reference/create-notification#content--language
 type NotificationContent struct {
-	Headings         interface{} `json:"headings,omitempty"`
-	Subtitle         interface{} `json:"subtitle,omitempty"`
-	TemplateID       string      `json:"template_id,omitempty"`
-	ContentAvailable bool        `json:"content_available,omitempty"`
-	Contents         interface{} `json:"contents,omitempty"`
+	// Set your notification title with these, then you can set a different title for the specific language
+	Headings interface{} `json:"headings,omitempty"`
+	// Set your notification subtitle with these, then you can set a different subtitle for the specific language
+	Subtitle interface{} `json:"subtitle,omitempty"`
+	// If you already set up a template with your account, and want to use that template, filled with your template ID
+	TemplateID string `json:"template_id,omitempty"`
+	// These configs just for iOS to displaying a notification content
+	ContentAvailable bool `json:"content_available,omitempty"`
+	// Set your notification content with these, then you can set a different content for the specific language
+	Contents interface{} `json:"contents,omitempty"`
 }
 
 // EmailContent model for request who send an email
@@ -59,9 +68,13 @@ type NotificationContent struct {
 // For more information, you can read this parameter reference from
 // OneSignal API Reference https://documentation.onesignal.com/reference/create-notification#email-content
 type EmailContent struct {
-	EmailSubject     string `json:"email_subject,omitempty"`
-	EmailBody        string `json:"email_body,omitempty"`
-	EmailFromName    string `json:"email_from_name,omitempty"`
+	// These config required for the subject of the email
+	EmailSubject string `json:"email_subject,omitempty"`
+	// These config required for the content of the email
+	EmailBody string `json:"email_body,omitempty"`
+	// The name the email is from. If this is not specified, this will use your default from name set in email set up
+	EmailFromName string `json:"email_from_name,omitempty"`
+	// The email address the email is from. If this is not specified, this will use your default from email in email set up
 	EmailFromAddress string `json:"email_fromaddress,omitempty"`
 }
 
@@ -70,15 +83,29 @@ type EmailContent struct {
 // For more information, you can read this parameter reference from
 // OneSignal API Reference https://documentation.onesignal.com/reference/create-notification#attachments
 type Attachments struct {
-	Data             interface{} `json:"data,omitempty"`
-	URL              string      `json:"url,omitempty"`
-	WebURL           string      `json:"web_url,omitempty"`
-	AppURL           string      `json:"app_url,omitempty"`
-	IosAttachments   interface{} `json:"ios_attachments,omitempty"`
-	BigPicture       string      `json:"big_picture,omitempty"`
-	ChromeWebImage   string      `json:"chrome_web_image,omitempty"`
-	AdmBigPicture    string      `json:"adm_big_picture,omitempty"`
-	ChromeBigPicture string      `json:"chrome_big_picture,omitempty"`
+	// A custom map of data that is passed back to your app.
+	Data interface{} `json:"data,omitempty"`
+	// The URL to open in the browser when a user clicks on the notification.
+	URL string `json:"url,omitempty"`
+	// Same as URL but only sent to web push platforms.
+	// Including Chrome, Firefox, Safari, Opera, etc.
+	WebURL string `json:"web_url,omitempty"`
+	// Same as URL but only sent to app platforms.
+	// Including iOS, Android, macOS, Windows, ChromeApps, etc.
+	AppURL string `json:"app_url,omitempty"`
+	// Adds media attachments to notifications. Set as JSON object, key as a media id of your choice and the value as a valid local filename or URL.
+	// User must press and hold on the notification to view.
+	IosAttachments interface{} `json:"ios_attachments,omitempty"`
+	// Picture to display in the expanded view. Can be a drawable resource name or a URL.
+	BigPicture string `json:"big_picture,omitempty"`
+	// Sets the web push notification's large image to be shown below the notification's title and text. Please see Web Push Notification Icons.
+	ChromeWebImage string `json:"chrome_web_image,omitempty"`
+	// Picture to display in the expanded view. Can be a drawable resource name or a URL.
+	// Only used for Amazon platform
+	AdmBigPicture string `json:"adm_big_picture,omitempty"`
+	// Picture to display in the expanded view. Can be a drawable resource name or a URL.
+	// Only used for ChromeApp platform
+	ChromeBigPicture string `json:"chrome_big_picture,omitempty"`
 }
 
 // ActionButtons model for added buttons to push notifications
@@ -86,9 +113,12 @@ type Attachments struct {
 // For more information, you can read this parameter reference from
 // OneSignal API Reference https://documentation.onesignal.com/reference/create-notification#action-buttons
 type ActionButtons struct {
-	Buttons     []interface{} `json:"buttons,omitempty"`
-	WebButtons  []interface{} `json:"web_buttons,omitempty"`
-	IosCategory string        `json:"ios_category,omitempty"`
+	// Buttons to add to the notification. Icon only works for Android.
+	Buttons []interface{} `json:"buttons,omitempty"`
+	// Add action buttons to the notification. The id field is required.
+	WebButtons []interface{} `json:"web_buttons,omitempty"`
+	// Category APS payload, use with registerUserNotificationSettings:categories in your Objective-C / Swift code.
+	IosCategory string `json:"ios_category,omitempty"`
 }
 
 // Appearance model for adjust icons, badges, and other appearance changes to your push notifications

@@ -208,8 +208,8 @@ type Platform struct {
 //
 // For your reference, you can read this API reference on https://documentation.onesignal.com/reference/create-notification
 type NotificationOpt struct {
-	AppID   string      `json:"app_id,omitempty"`
-	Filters interface{} `json:"filters,omitempty"`
+	AppID   string        `json:"app_id,omitempty"`
+	Filters []interface{} `json:"filters,omitempty"`
 	SpecificDevice
 	NotificationContent
 	EmailContent

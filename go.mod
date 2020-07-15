@@ -1,4 +1,4 @@
-module github.com/LordAur/go-onesignal-sdk
+module github.com/KodepandaID/go-onesignal-sdk
 
 go 1.14
 

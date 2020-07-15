@@ -6,7 +6,7 @@ If you found an issue, you can report to Github Issue or send a direct message t
 
 ## Installation
 ```bash
-go get https://github.com/KodepandaID/go-onesignal-sdk
+go get github.com/KodepandaID/go-onesignal-sdk
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ go get https://github.com/KodepandaID/go-onesignal-sdk
 This SDK needs an API key, Auth Key, and App ID optionally.
 
 ```go
-import "https://github.com/KodepandaID/go-onesignal-sdk"
+import "github.com/KodepandaID/go-onesignal-sdk"
 
 func main() {
     client := onesignal.NewClient()
